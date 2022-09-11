@@ -1,0 +1,35 @@
+package views;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
+import models.HerniLogika;
+
+public class Platno extends JPanel {
+    HerniLogika logika;
+    public Platno() {
+        this.logika = new HerniLogika(400);
+        this.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                switch(e.getButton()) {
+                    case MouseEvent.BUTTON1 -> logika.leveKliknuti(e.getX(), e.getY());
+                    case MouseEvent.BUTTON3 -> logika.praveKliknuti(e.getX(), e.getY());
+                }
+                repaint();
+            }
+            
+        });
+    }
+    public void vykresliPole(Graphics g) {
+        g.setColor(new Color(189,189,189));
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+    }
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        vykresliPole(g);
+        logika.vykresliPole(g);
+    }
+}
