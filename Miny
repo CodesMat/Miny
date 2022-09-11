@@ -1,0 +1,12 @@
+package miny;
+
+import views.View;
+
+public class Miny {
+
+    public static void main(String[] args) {
+        View view =new View();
+        view.setVisible(true);
+    }
+    
+}
