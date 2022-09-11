@@ -1,0 +1,82 @@
+package models;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
+public class Policko {
+    
+    private boolean odhaleno;
+    private boolean oznaceno;
+    private boolean selectedFuckUp;
+    private int hodnota;
+    private Color[] barvy;
+    
+    public Policko(int hodnota, boolean odhaleno, boolean oznaceno) {
+        this.hodnota = hodnota;
+        this.odhaleno = odhaleno;
+        this.oznaceno = oznaceno;
+        this.selectedFuckUp = false;
+        this.barvy = new Color[]{new Color(189,189,189),new Color(0,0,255), new Color(5,125,5), new Color(254,3,3), new Color(0,0,123),new Color(123,0,0),new Color(123,123,123),new Color(123,123,123) ,new Color(123,123,123)};
+    }
+    public void vykresliSe(Graphics g, int x, int y, int velikostPolicka) {
+        if(this.oznaceno) {
+            Image image = new ImageIcon(this.getClass().getResource("/resource/vlajka.png")).getImage();
+            g.drawImage(image, x, y, velikostPolicka, velikostPolicka, null);
+        }else {
+            if(!this.odhaleno) {
+                g.setColor(new Color(255,255,255));
+                g.fillRect(x,y,velikostPolicka, velikostPolicka);
+            }else {
+                g.setColor(barvy[0]);
+                g.fillRect(x,y,velikostPolicka, velikostPolicka);
+                if(this.hodnota == 9) {
+                    Image image;
+                    image = new ImageIcon(this.getClass().getResource("/resource/mina.png")).getImage();
+                    if(selectedFuckUp) {
+                        image = new ImageIcon(this.getClass().getResource("/resource/crossed.png")).getImage();
+                    }
+                    g.drawImage(image, x, y, velikostPolicka, velikostPolicka, null);
+                }else {
+                    g.setColor(barvy[this.hodnota]);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+                    g.drawString(String.valueOf(this.hodnota), x+15, y+25);       
+                }
+            }
+        }
+        g.setColor(Color.BLACK);
+        g.drawRect(x,y,velikostPolicka,velikostPolicka);
+    }
+    public boolean isSelectedFuckUp() {
+        return selectedFuckUp;
+    }
+    public void setSelectedFuckUp(boolean selectedFuckUp) {
+        this.selectedFuckUp = selectedFuckUp;
+    }
+    public Color[] getBarvy() {
+        return barvy;
+    }
+    public void setBarvy(Color[] barvy) {
+        this.barvy = barvy;
+    }
+    public boolean isOznaceno() {
+        return oznaceno;
+    }
+    public void setOznaceno(boolean oznaceno) {
+        this.oznaceno = oznaceno;
+    }
+    public boolean isOdhaleno() {
+        return odhaleno;
+    }
+    public void setOdhaleno(boolean odhaleno) {
+        this.odhaleno = odhaleno;
+    }
+    public int getHodnota() {
+        return hodnota;
+    }
+    public void setHodnota(int hodnota) {
+        this.hodnota = hodnota;
+    }
+}
